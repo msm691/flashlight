@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashLightRP</title>
+    <title>FlashLightRP | Serveur FiveM</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -64,11 +64,13 @@
         }
 
         .logo img { 
-        height: 45px; 
-        width: 45px; /* Ajoute une largeur égale à la hauteur */
-        border-radius: 50%; /* Crée l'effet rond parfait */
-        object-fit: cover; /* Empêche l'image de s'écraser ou de se déformer */
+            height: 45px; 
+            width: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
         }
+        
         .logo span { color: var(--primary-color); }
 
         nav ul { list-style: none; display: flex; gap: 20px; align-items: center; }
@@ -194,7 +196,7 @@
     </section>
 
     <section id="reglement">
-        <h2 class="section-title">Règlement</h2>
+        <h2 class="section-title">Règlement Intérieur</h2>
         <div class="tabs-container">
             <div class="tabs-header">
                 <button class="tab-btn active" onclick="openTab(event, 'general')">Général</button>
@@ -293,7 +295,7 @@
                         <li style="margin-bottom: 5px;"><strong>Gradation de la Force :</strong> Les agents doivent respecter l'usage proportionnel de la force. L'arme létale ne sort qu'en cas de menace mortelle imminente (suspect armé fuyant vers une foule, tirs sur les agents). Le taser et la matraque sont à privilégier.</li>
                         <li style="margin-bottom: 5px;"><strong>Procédures et Droits (Miranda) :</strong> Lors de chaque arrestation, l'agent doit lire les droits du suspect (droit au silence, droit à un avocat ou un appel, droit à des soins médicaux).</li>
                         <li style="margin-bottom: 5px;"><strong>Course-poursuite :</strong> Les agents de police doivent rouler de manière sécurisée, même en poursuite. Le "Pit-Maneuver" (percuter un véhicule pour le faire tourner) n'est autorisé qu'à des vitesses raisonnables et hors des zones très denses, pour éviter le VDM.</li>
-                        <li style="margin-bottom: 5px;"><strong>Corruption :</strong> La petite corruption (fermer les yeux sur un petit délit contre un pot-de-vin, effacer une petite amende) peut être tolérée, mais la corruption majeure (fournir des armes de service aux gangs, assassinat, braquage en tenue) nécessite obligatoirement la validation préalable de la modération via un dossier écrit.</li>
+                        <li style="margin-bottom: 5px;"><strong>Corruption :</strong> La petite corruption (fermer les yeux sur un petit délit contre un pot-de-vin, effacer une petite amende) peut être tolérée selon les serveurs, mais la corruption majeure (fournir des armes de service aux gangs, assassinat, braquage en tenue) nécessite obligatoirement la validation préalable de la modération via un dossier écrit.</li>
                     </ul>
                 </div>
 
@@ -411,7 +413,7 @@
 
                 <hr style="border-color: #333; margin: 30px 0;">
 
-                <div>
+                <div style="margin-bottom: 40px;">
                     <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;"><i class="fas fa-map-marked-alt"></i> 3. Guerre De Territoire</h4>
 
                     <h5 style="margin-top: 15px; color: #fff;">Organisation de l'Attaque</h5>
@@ -430,6 +432,26 @@
                         <li><span style="color: var(--primary-color);">[Autorisé]</span> Prendre des hauteurs naturelles (montagne uniquement).</li>
                     </ul>
                 </div>
+
+                <hr style="border-color: #333; margin: 30px 0;">
+
+                <div>
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;"><i class="fas fa-truck-moving"></i> 4. Convoi Vs Convoi</h4>
+
+                    <h5 style="margin-top: 15px; color: #fff;">Meta CVC</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Tout le monde doit pack convoi. Après le call, le redrop est autorisé pour tout le monde.</li>
+                        <li>Une seule back de 2 (Voiture) est autorisée.</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Interdictions / Limitations</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li><span style="color: #ff4d4d;">[Limite]</span> Une limite de 2 Légères + 1 Lourde en automatique est à respecter.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Interdiction de bait au tapage.</li>
+                        <li><span style="color: var(--primary-color);">[Obligation]</span> Obligation d'être en supériorité numérique ou nofear pour pouvoir call.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Interdiction d'avoir plus de 1 Cal.50 / 1 P.Lourd / 1 Revolver lourd.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -441,19 +463,19 @@
                 <i class="fab fa-discord"></i>
                 <h3>Discord Principal</h3>
                 <p>Toutes les annonces, les événements et le support général du serveur.</p>
-                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+                <a href="https://discord.gg/ngT7P5NGs5" class="btn">Rejoindre</a>
             </div>
             <div class="card">
                 <i class="fas fa-gavel"></i>
                 <h3>Discord Légal</h3>
                 <p>Accès exclusif aux métiers de la fonction publique et entreprises.</p>
-                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+                <a href="https://discord.gg/mFTrRkbRvn" class="btn">Rejoindre</a>
             </div>
             <div class="card">
                 <i class="fas fa-mask"></i>
                 <h3>Discord Illégal</h3>
                 <p>Gestion des groupes criminels, revendications et dossiers gangs.</p>
-                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+                <a href="https://discord.gg/yeQYnvR9Ya" class="btn">Rejoindre</a>
             </div>
         </div>
     </section>
@@ -501,7 +523,7 @@
                 <i class="fas fa-shopping-bag"></i>
                 <h3>Soutenir FlashLightRP</h3>
                 <p>Aidez-nous à financer les serveurs et scripts exclusifs. Obtenez des cosmétiques et des accès prioritaires en remerciement de votre soutien.</p>
-                <a href="TON_LIEN_TEBEX_ICI" class="btn">Accéder à Tebex</a>
+                <a href="https://discord.gg/flashlight" class="btn">Accéder à Tebex</a>
             </div>
         </div>
     </section>
@@ -513,13 +535,13 @@
                 <i class="fas fa-clipboard-list"></i>
                 <h3>Candidature Staff</h3>
                 <p>Vous souhaitez aider à la modération ? Remplissez le formulaire de recrutement.</p>
-                <a href="TON_LIEN_DOC_ICI" class="btn">Postuler</a>
+                <a href="https://discord.gg/flashlight" class="btn">Postuler</a>
             </div>
             <div class="card">
                 <i class="fas fa-bullhorn"></i>
                 <h3>Community Manager</h3>
                 <p>Maîtrise de TikTok/Twitter ? Aidez-nous à faire connaître le serveur.</p>
-                <a href="TON_LIEN_DOC_ICI" class="btn">Postuler</a>
+                <a href="https://discord.gg/flashlight" class="btn">Postuler</a>
             </div>
         </div>
     </section>
