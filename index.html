@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashLightRP | Serveur FiveM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --surface-color: rgba(20, 20, 20, 0.85);
+            --surface-light: rgba(40, 40, 40, 0.9);
+            --primary-color: #79d70f;
+            --primary-hover: #5ea80c;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.5), rgba(10,10,10,0.95)), url('banner.gif') center/cover fixed no-repeat;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(121, 215, 15, 0.3);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img { 
+        height: 45px; 
+        width: 45px; /* Ajoute une largeur égale à la hauteur */
+        border-radius: 50%; /* Crée l'effet rond parfait */
+        object-fit: cover; /* Empêche l'image de s'écraser ou de se déformer */
+        }
+        .logo span { color: var(--primary-color); }
+
+        nav ul { list-style: none; display: flex; gap: 20px; align-items: center; }
+        nav a { color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
+        nav a:hover { color: var(--primary-color); }
+
+        /* --- STATUS --- */
+        .server-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(121, 215, 15, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 1; }
+            70% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(0.9); opacity: 1; }
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 20px 60px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary-color); text-shadow: 0 0 15px rgba(121, 215, 15, 0.3); }
+
+        /* --- HERO --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #hero h1 { font-size: 4.5rem; margin-bottom: 15px; }
+        #hero p { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 35px; max-width: 700px; }
+
+        .btn {
+            padding: 14px 28px;
+            background-color: var(--primary-color);
+            color: #000;
+            text-decoration: none;
+            font-weight: 900;
+            border-radius: 4px;
+            transition: 0.3s;
+            display: inline-block;
+            border: 2px solid var(--primary-color);
+        }
+        .btn:hover { background: transparent; color: var(--primary-color); box-shadow: 0 0 20px var(--primary-color); }
+        .btn-alt { background: transparent; color: #fff; border-color: #fff; margin-left: 15px; }
+        .btn-alt:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
+
+        /* --- RÈGLEMENT (ONGLETS) --- */
+        .tabs-container { background: var(--surface-color); border-radius: 12px; overflow: hidden; border: 1px solid #333; backdrop-filter: blur(10px); }
+        .tabs-header { display: flex; background: rgba(0,0,0,0.5); }
+        .tab-btn { flex: 1; padding: 20px; background: none; border: none; color: var(--text-muted); font-weight: 700; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .tab-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); background: var(--surface-color); }
+        .tab-content { display: none; padding: 40px; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- GRILLES & CARTES --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--surface-color);
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary-color); box-shadow: 0 10px 30px rgba(121, 215, 15, 0.2); }
+        .card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 20px; }
+        .card h3 { margin-bottom: 15px; }
+        .card p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem; }
+
+        /* --- STAFF AVATARS --- */
+        .staff-avatar { width: 70px; height: 70px; background: var(--surface-light); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-color); font-size: 1.4rem; color: var(--primary-color); }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 40px; background: rgba(10,10,10,0.9); border-top: 1px solid #333; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="logo.png" alt="FlashLightRP">
+            FLASH<span>LIGHT</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#reglement">Règlement</a></li>
+                <li><a href="#discords">Discords</a></li>
+                <li><a href="#staff">Équipe</a></li>
+                <li><a href="#boutique">Boutique</a></li>
+                <li><a href="#recrutement">Postuler</a></li>
+            </ul>
+        </nav>
+        <div class="server-status">
+            <div class="status-dot"></div>
+            <div class="status-text"><span id="p-count">...</span>/<span id="m-count">...</span> JOUEURS</div>
+        </div>
+    </header>
+
+    <section id="hero">
+        <h1>FlashLight <span>RP</span></h1>
+        <p>L'excellence du RolePlay sur FiveM. Un serveur stable, une économie réaliste et une communauté passionnée vous attendent.</p>
+        <div>
+            <a href="#discords" class="btn">Rejoindre l'aventure</a>
+            <a href="#boutique" class="btn btn-alt">Soutenir le projet</a>
+        </div>
+    </section>
+
+    <section id="reglement">
+        <h2 class="section-title">Règlement Intérieur</h2>
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="openTab(event, 'general')">Général</button>
+                <button class="tab-btn" onclick="openTab(event, 'legal')">Légal</button>
+                <button class="tab-btn" onclick="openTab(event, 'illegal')">Illégal</button>
+            </div>
+            
+            <div id="general" class="tab-content active">
+                <h3>Règlement Général du Serveur</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Bienvenue sur le serveur ! Pour garantir une expérience de jeu immersive, respectueuse et agréable pour tous, chaque joueur est tenu de lire, comprendre et appliquer le présent règlement. L'ignorance des règles ne justifie pas leur infraction.</p>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-users"></i> 1. Comportement Hors Rôle (HRP / OOC)</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Le respect est la règle d'or. Derrière chaque personnage se trouve un joueur.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Respect mutuel :</strong> Les insultes, le racisme, la discrimination, l'homophobie ou toute forme de harcèlement en HRP (sur Discord ou dans les chats OOC) entraîneront un bannissement immédiat et définitif.</li>
+                        <li style="margin-bottom: 5px;"><strong>Séparation HRP / RP (Mix) :</strong> Il est strictement interdit de mélanger les informations Hors RolePlay (HRP) et le jeu (RP). Ce qui se passe en jeu reste en jeu.</li>
+                        <li style="margin-bottom: 5px;"><strong>Microphone :</strong> Un microphone de bonne qualité est obligatoire. Les bruits de fond dérangeants ou une mauvaise qualité audio nuisent à l'immersion.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-book"></i> 2. Les Fondements du RolePlay</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Pour assurer une immersion totale, les règles de base du RP doivent être scrupuleusement respectées.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Metagaming (MG) :</strong> Utiliser des informations obtenues hors du jeu (Discord, streams, discussions HRP) pour en tirer parti dans le jeu. Strictement interdit.</li>
+                        <li style="margin-bottom: 5px;"><strong>Powergaming (PG) :</strong> Réaliser des actions irréalistes ou impossibles dans la vraie vie (ex: courir après avoir pris une balle dans la jambe, parler avec un pistolet dans la bouche, ou forcer une action RP sans laisser de choix à l'autre joueur).</li>
+                        <li style="margin-bottom: 5px;"><strong>Fear RP :</strong> Vous devez jouer la peur de manière réaliste. Si vous êtes braqué par deux personnes armées alors que vous n'avez rien en main, vous devez coopérer. Votre vie est la chose la plus précieuse.</li>
+                        <li style="margin-bottom: 5px;"><strong>Pain RP :</strong> Vous devez simuler la douleur de manière appropriée lors d'un accident, d'une chute ou d'une blessure. On ne repart pas en courant après un accident de voiture à 130 km/h.</li>
+                        <li style="margin-bottom: 5px;"><strong>Mass Deathmatch (FreeKill / FK) :</strong> Tuer un ou plusieurs joueurs sans aucune raison RP valable ni interaction préalable.</li>
+                        <li style="margin-bottom: 5px;"><strong>Vehicle Deathmatch (VDM / Carkill) :</strong> Utiliser un véhicule de manière intentionnelle comme une arme pour écraser et tuer d'autres joueurs sans raison RP extrême.</li>
+                        <li style="margin-bottom: 5px;"><strong>Revenge Kill (RK) :</strong> Retourner tuer la personne qui vient de vous abattre après avoir été réanimé à l'hôpital. Si vous tombez dans le coma, vous oubliez les événements ayant mené à votre "mort".</li>
+                        <li style="margin-bottom: 5px;"><strong>No Fear LSPD / EMS :</strong> Les services publics (Police, Secours) doivent être respectés. Provoquer la police sans raison (CopBaiting) est interdit.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-theater-masks"></i> 3. Règles en Action et Interactions</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Une scène RP engagée doit toujours être terminée, quelle que soit la situation.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Déconnexion en action (Combat Logging) :</strong> Quitter le jeu, simuler un crash ou se déconnecter volontairement pour éviter une arrestation, un braquage ou une mort est formellement interdit. En cas de vrai crash, prévenez immédiatement sur Discord.</li>
+                        <li style="margin-bottom: 5px;"><strong>Force RP :</strong> Forcer un joueur à faire une scène qu'il ne veut pas ou qui va à l'encontre de la logique (ex: l'obliger à vider son compte en banque de manière irréaliste).</li>
+                        <li style="margin-bottom: 5px;"><strong>Utilisation de bugs (Usebug) :</strong> Exploiter un faille du jeu ou d'un script pour s'enrichir, traverser des murs ou gagner un avantage est passible d'un bannissement lourd.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-coins"></i> 4. Économie, Arnaques et Illégal</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">L'économie du serveur doit rester équilibrée. Le fair-play est de mise, même dans la criminalité.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Interdiction des arnaques majeures :</strong> Les arnaques concernant la vente de véhicules, la vente de propriétés, et les échanges contre de l'argent réel (Pay to Win illégal) sont strictement interdites.</li>
+                        <li style="margin-bottom: 5px;"><strong>Vols et Dépouillements :</strong> Vous pouvez braquer un joueur, mais vous ne pouvez pas le laisser entièrement à zéro s'il coopère bien.</li>
+                        <li style="margin-bottom: 5px;"><strong>Zones Sûres (Safe Zones) :</strong> Toute action illégale (braquage, kidnapping, meurtre) est interdite dans les Hôpitaux (Pillbox, etc.), Postes de Police (LSPD, BCSO), Concessionnaires et le Point d'apparition des nouveaux joueurs (Spawn).</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-skull-crossbones"></i> 5. La Mort RP et le Wipe</h4>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Coma (Mort HRP) :</strong> Si vous tombez dans le coma et êtes réanimé, vous avez de graves blessures et devez agir en conséquence (repos, soins). Si le temps s'écoule et que vous "respawnez" à l'hôpital, vous oubliez l'action qui vient de se passer.</li>
+                        <li style="margin-bottom: 5px;"><strong>Mort RP (Définitif) :</strong> La Mort RP doit faire l'objet d'un accord mutuel entre les joueurs impliqués et la modération (dossier validé par le staff), sauf en cas de trahison majeure d'un gang (Blood In / Blood Out).</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="legal" class="tab-content">
+                <h3>Règlement des Factions Légales</h3>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Jouer dans une faction légale demande un certain niveau de sérieux et de rigueur. Vous êtes le moteur de l'économie et de la sécurité de la ville. Le professionnalisme de votre personnage doit primer lors de votre service.</p>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-briefcase"></i> 1. Règles Générales du Légal</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Ces règles s'appliquent à tous les employés, du simple intérimaire au patron.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Tenue et Véhicules :</strong> Pendant votre service, la tenue de travail de votre entreprise/faction est obligatoire. Les véhicules de fonction ne doivent être utilisés que dans le cadre professionnel.</li>
+                        <li style="margin-bottom: 5px;"><strong>Comportement en Service :</strong> Vous représentez votre entreprise ou votre institution. Un langage correct et un comportement professionnel sont attendus.</li>
+                        <li style="margin-bottom: 5px;"><strong>Détournement d'Inventaire :</strong> Voler ou détourner le coffre de son entreprise (armes, argent, objets craftés) pour un profit personnel ou pour alimenter l'illégal est strictement interdit et passible d'un bannissement définitif.</li>
+                        <li style="margin-bottom: 5px;"><strong>Double Compte (Double Job) :</strong> Il est généralement interdit de cumuler un poste à haute responsabilité dans le légal et de mener des activités illégales de grande envergure (sauf dossier de corruption validé par le staff).</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-user-tie"></i> 2. Patronat et Hauts Gradés (Entreprises)</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Les patrons et co-patrons sont responsables de l'activité de leur point de vente.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Quota d'Activité :</strong> Un patron doit s'assurer que son entreprise est active et ouvre régulièrement. Une entreprise inactive pendant plus d'une semaine (sans prévenir le staff) peut être saisie et revendue.</li>
+                        <li style="margin-bottom: 5px;"><strong>Recrutement et Licenciement :</strong> Les patrons ont le droit d'embaucher et de licencier en fonction des performances RP de leurs employés. Tout licenciement doit avoir une raison RP valable (inactivité, faute professionnelle, insubordination).</li>
+                        <li style="margin-bottom: 5px;"><strong>Gestion Financière :</strong> L'argent du coffre de l'entreprise appartient à l'entreprise. Il sert à payer les employés (primes, salaires si le script le demande) et à acheter des matières premières. S'en servir comme portefeuille personnel est interdit.</li>
+                        <li style="margin-bottom: 5px;"><strong>Monopole et Concurrence :</strong> La concurrence doit rester saine et se régler par le RolePlay (guerre des prix, publicité, accords commerciaux). Les alliances abusives pour détruire une petite entreprise concurrente peuvent être régulées par la mairie/le staff.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-shield-alt"></i> 3. LSPD / BCSO (Forces de l'Ordre)</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Les forces de l'ordre sont le pilier de la justice. Leur RP doit être irréprochable et mesuré.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Gradation de la Force :</strong> Les agents doivent respecter l'usage proportionnel de la force. L'arme létale ne sort qu'en cas de menace mortelle imminente (suspect armé fuyant vers une foule, tirs sur les agents). Le taser et la matraque sont à privilégier.</li>
+                        <li style="margin-bottom: 5px;"><strong>Procédures et Droits (Miranda) :</strong> Lors de chaque arrestation, l'agent doit lire les droits du suspect (droit au silence, droit à un avocat ou un appel, droit à des soins médicaux).</li>
+                        <li style="margin-bottom: 5px;"><strong>Course-poursuite :</strong> Les agents de police doivent rouler de manière sécurisée, même en poursuite. Le "Pit-Maneuver" (percuter un véhicule pour le faire tourner) n'est autorisé qu'à des vitesses raisonnables et hors des zones très denses, pour éviter le VDM.</li>
+                        <li style="margin-bottom: 5px;"><strong>Corruption :</strong> La petite corruption (fermer les yeux sur un petit délit contre un pot-de-vin, effacer une petite amende) peut être tolérée, mais la corruption majeure (fournir des armes de service aux gangs, assassinat, braquage en tenue) nécessite obligatoirement la validation préalable de la modération via un dossier écrit.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-bottom: 30px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;"><i class="fas fa-ambulance"></i> 4. EMS (Services de Secours)</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Les EMS sauvent des vies sans faire de distinction. Ils sont essentiels au fonctionnement du serveur.</p>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li style="margin-bottom: 5px;"><strong>Neutralité Totale :</strong> Les EMS traitent tout le monde de manière égale, qu'il s'agisse du chef de la police ou du plus grand criminel de la ville.</li>
+                        <li style="margin-bottom: 5px;"><strong>Secret Médical :</strong> Un ambulancier/médecin n'a pas le droit de divulguer les blessures, l'identité des patients ou les lieux d'intervention à des tiers (y compris la police), sauf mandat judiciaire validé.</li>
+                        <li style="margin-bottom: 5px;"><strong>Intouchabilité (Zone Grise) :</strong> Sauf erreur RP grave de la part de l'EMS (provocation, non-respect de la peur), il est interdit aux joueurs de braquer, tuer, kidnapper ou voler le véhicule d'un membre des EMS en service.</li>
+                        <li style="margin-bottom: 5px;"><strong>Priorité d'Intervention :</strong> Sur une scène de fusillade, les EMS doivent attendre que la zone soit sécurisée (généralement par la LSPD) avant de pénétrer sur les lieux et de réanimer.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="illegal" class="tab-content">
+                <h3>Règlement Illégal Complet</h3>
+
+                <div style="margin-bottom: 40px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;"><i class="fas fa-project-diagram"></i> 1. Création de Projet, Suivi Staff, Gestion Discord</h4>
+                    
+                    <h5 style="margin-top: 15px; color: #fff;">Création de Projet</h5>
+                    <p style="margin-bottom: 10px;"><strong>Condition de création :</strong></p>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Avoir pris en compte le règlement de Flash Light dans sa <strong>globalité</strong>.</li>
+                        <li>Dossier complet obligatoire.</li>
+                        <li>Préférence pour les nouveaux Leads, afin de favoriser le renouveau.</li>
+                        <li>Avoir minimum 18 ans et de l’expérience en tant que Lead.</li>
+                        <li>Avoir un discord déjà prêt, avec minimum 20 membres prêts à start.</li>
+                    </ul>
+
+                    <p style="margin-bottom: 10px;"><strong>Start :</strong></p>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <div style="flex: 1; min-width: 250px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border-left: 3px solid var(--primary-color);">
+                            <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Organisation</h6>
+                            <ul style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                                <li>16 Glock</li>
+                                <li>8 armes blanches</li>
+                                <li>Local 1T, Local 300kg</li>
+                                <li>Garage 12 places</li>
+                                <li>3 véhicules + 2 Speedo <em>(Full Convoi pour les groupes Lore)</em></li>
+                                <li>200k propre</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1; min-width: 250px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border-left: 3px solid #ff4d4d;">
+                            <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Gang</h6>
+                            <ul style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem;">
+                                <li>14 Glock</li>
+                                <li>8 armes blanches</li>
+                                <li>Local 1T, Local 300kg</li>
+                                <li>Garage 12 places</li>
+                                <li>3 véhicules + 2 Moonbeam <em>(Full Convoi pour les groupes Lores)</em></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Organisation et suivi du Staff</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Chaque groupe illégal se verra attribuer un GGO référent.</li>
+                        <li>Avant de rejoindre un projet, tous les personnages liés au groupe doivent obligatoirement être supprimés (wipe). Un G-Doc est mis à disposition pour effectuer ces demandes.</li>
+                        <li>En cas de conflit avec un autre groupe, vous devez d’abord essayer de régler la situation à l’amiable. Si aucun accord n’est trouvé, vous pouvez faire appel à un membre du staff.</li>
+                        <li>Seuls les Leads sont autorisés à ouvrir un ticket pour signaler un problème avec un autre groupe, en détaillant clairement les faits.</li>
+                        <li>Concernant les exclusions, tout abus de kick est formellement interdit. Toute expulsion doit être justifiée par une raison valable.</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Limites de membres et gestion du Discord</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 10px;">
+                        <li><strong>Organisation :</strong> maximum de 30 membres au total, avec une présence simultanée limitée à 20 joueurs en jeu.</li>
+                        <li><strong>Gang :</strong> maximum de 35 membres au total, avec une limite de 25 joueurs présents en même temps sur une scène.</li>
+                    </ul>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Votre serveur Discord doit être strictement réservé aux membres actifs disposant du rôle correspondant à votre groupe. Les seules exceptions autorisées sont les membres du staff.</p>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Cohérence</h5>
+                    <p style="color: var(--text-muted);">Les tenues, styles vestimentaires et l’apparence générale des personnages doivent rester cohérents avec le type de groupe que vous incarnez (culture, origine du groupe, ambiance, etc.).</p>
+                </div>
+
+                <hr style="border-color: #333; margin: 30px 0;">
+
+                <div style="margin-bottom: 40px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;"><i class="fas fa-flask"></i> 2. Attaque de Laboratoire</h4>
+
+                    <h5 style="margin-top: 15px; color: #fff;">Informations RP obligatoires</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Toute information concernant l’existence ou la localisation d’un laboratoire doit impérativement être obtenue en <strong>roleplay</strong> (filature, renseignement, aveu, etc.).</li>
+                        <li>Vous devez être en mesure de justifier l’origine de ces informations en fournissant une preuve vidéo (REC) à joindre à votre dossier.</li>
+                        <li>L’utilisation d’informations HRP ou obtenues de manière non légitime (métagaming, leaks, streamhack, etc.) est strictement interdite et entraînera un refus immédiat du dossier avec sanctions sévères.</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Dossier d'Attaque de Laboratoire</h5>
+                    <p style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 10px;"><em>Merci de regrouper l’ensemble des éléments demandés dans un unique Google Slides, en y ajoutant toutes les preuves nécessaires.</em></p>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Nom du groupe attaquant et du groupe défendant.</li>
+                        <li>Preuves attestant que le groupe défendant est bien propriétaire (aveux RP, transactions RP, photos du local avec GPS visible).</li>
+                        <li>Preuves d’un convoi de drogue intercepté (REC/Screens des matières premières).</li>
+                        <li>Preuves de production issue du laboratoire (REC/Screens des produits finis).</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Délais</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Une fois le dossier validé, le groupe attaquant dispose de <strong>48 heures</strong> pour lancer son attaque.</li>
+                        <li>En cas de réussite, il prend possession du labo et doit communiquer la nouvelle localisation au staff dans les 24h.</li>
+                        <li>Si l’opération échoue, des pertes en RP peuvent être infligées. Un délai de <strong>7 jours</strong> est obligatoire avant de retenter.</li>
+                        <li>Un laboratoire fraîchement récupéré bénéficie d’une protection de <strong>7 jours</strong> sans attaque possible.</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Interdictions / Autorisations durant l'Attaque</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Être en véhicule pendant une attaque.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Prendre plus d'une arme automatique durant une attaque.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Avoir plus de 3 cal. 50 sur une attaque.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Dodge sur plus de 2 jours une défense (perte du territoire en cas d'abus).</li>
+                        <li><span style="color: var(--primary-color);">[Autorisé]</span> Prendre des hauteurs naturelles (montagne uniquement).</li>
+                    </ul>
+                </div>
+
+                <hr style="border-color: #333; margin: 30px 0;">
+
+                <div>
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;"><i class="fas fa-map-marked-alt"></i> 3. Guerre De Territoire</h4>
+
+                    <h5 style="margin-top: 15px; color: #fff;">Organisation de l'Attaque</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted); margin-bottom: 15px;">
+                        <li>Les 2 Leads doivent se mettre d'accord sur : la date, l'heure et le nombre de kevlar sortis. Avec Rec/Screen à l'appui pour validation GGO.</li>
+                        <li>Une fois la guerre validée, le groupe attaquant dispose de <strong>48 heures</strong> maximum pour lancer l'attaque.</li>
+                        <li>Si la zone n'impacte aucun business, un arrangement suffit.</li>
+                        <li>Si la zone a un impact sur un business, le groupe attaquant doit obligatoirement avoir <strong>10% d'influence</strong> sur la zone.</li>
+                    </ul>
+
+                    <h5 style="margin-top: 20px; color: #fff;">Interdictions / Autorisations durant la Guerre</h5>
+                    <ul style="padding-left: 20px; color: var(--text-muted);">
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Prendre plus d'une arme automatique durant une attaque.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Avoir plus de 3 cal. 50 sur une attaque.</li>
+                        <li><span style="color: #ff4d4d;">[Interdit]</span> Dodge sur plus de 2 jours une défense (perte du territoire en cas d'abus).</li>
+                        <li><span style="color: var(--primary-color);">[Autorisé]</span> Prendre des hauteurs naturelles (montagne uniquement).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="discords">
+        <h2 class="section-title">Nos Communications</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fab fa-discord"></i>
+                <h3>Discord Principal</h3>
+                <p>Toutes les annonces, les événements et le support général du serveur.</p>
+                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-gavel"></i>
+                <h3>Discord Légal</h3>
+                <p>Accès exclusif aux métiers de la fonction publique et entreprises.</p>
+                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-mask"></i>
+                <h3>Discord Illégal</h3>
+                <p>Gestion des groupes criminels, revendications et dossiers gangs.</p>
+                <a href="TON_LIEN_ICI" class="btn">Rejoindre</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="staff">
+        <h2 class="section-title">L'Équipe d'Administration</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-crown"></i></div>
+                <h3>Jeager</h3>
+                <p>Fondateur</p>
+            </div>
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-crown"></i></div>
+                <h3>Mehdi</h3>
+                <p>Fondateur</p>
+            </div>
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-crown"></i></div>
+                <h3>Kurrty</h3>
+                <p>Fondateur</p>
+            </div>
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-crown"></i></div>
+                <h3>Rames</h3>
+                <p>Fondateur</p>
+            </div>
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-user-shield"></i></div>
+                <h3>Kts</h3>
+                <p>Developpeur</p>
+            </div>
+            <div class="card">
+                <div class="staff-avatar"><i class="fas fa-user-shield"></i></div>
+                <h3>Jaxx</h3>
+                <p>Developpeur</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="boutique">
+        <h2 class="section-title">Boutique VIP</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card" style="border: 1px solid var(--primary-color); background: rgba(121, 215, 15, 0.05);">
+                <i class="fas fa-shopping-bag"></i>
+                <h3>Soutenir FlashLightRP</h3>
+                <p>Aidez-nous à financer les serveurs et scripts exclusifs. Obtenez des cosmétiques et des accès prioritaires en remerciement de votre soutien.</p>
+                <a href="TON_LIEN_TEBEX_ICI" class="btn">Accéder à Tebex</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="recrutement">
+        <h2 class="section-title">Nous Rejoindre</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Candidature Staff</h3>
+                <p>Vous souhaitez aider à la modération ? Remplissez le formulaire de recrutement.</p>
+                <a href="TON_LIEN_DOC_ICI" class="btn">Postuler</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-bullhorn"></i>
+                <h3>Community Manager</h3>
+                <p>Maîtrise de TikTok/Twitter ? Aidez-nous à faire connaître le serveur.</p>
+                <a href="TON_LIEN_DOC_ICI" class="btn">Postuler</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 FlashLightRP - Tous droits réservés.</p>
+        <p style="margin-top: 10px;"><a href="https://tiktok.com/@FLASHLIGHTFR" style="color:var(--primary-color); text-decoration:none;"><i class="fab fa-tiktok"></i> @FLASHLIGHTFR</a></p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; tabcontent[i].classList.remove("active"); }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // --- SYSTÈME DE STATUT DU SERVEUR FIVEM ---
+        const cfxCode = 'bjex5p';
+
+        async function updateServerStatus() {
+            try {
+                const response = await fetch(`https://servers-frontend.fivem.net/api/servers/single/${cfxCode}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    const playersOnline = data.Data.clients;
+                    const maxPlayers = data.Data.sv_maxclients;
+                    
+                    document.getElementById('p-count').innerText = playersOnline;
+                    document.getElementById('m-count').innerText = maxPlayers;
+                    
+                    const dot = document.querySelector('.status-dot');
+                    dot.style.backgroundColor = 'var(--primary-color)';
+                    dot.style.boxShadow = '0 0 10px var(--primary-color)';
+                    
+                } else {
+                    throw new Error('Serveur injoignable');
+                }
+            } catch (error) {
+                console.error('Erreur API FiveM:', error);
+                
+                document.getElementById('p-count').innerText = '0';
+                document.getElementById('m-count').innerText = '0';
+                
+                const dot = document.querySelector('.status-dot');
+                dot.style.backgroundColor = '#ff4d4d'; 
+                dot.style.boxShadow = '0 0 10px #ff4d4d';
+            }
+        }
+
+        updateServerStatus();
+        setInterval(updateServerStatus, 60000);
+    </script>
+</body>
+</html>
