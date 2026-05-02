@@ -9,16 +9,15 @@
     
     <style>
         :root {
-            /* Palette Bleue & Bleu Marine */
-            --bg-color: #030816; /* Bleu très très foncé, presque noir */
-            --surface-color: rgba(10, 25, 50, 0.85); /* Bleu marine transparent */
+            --bg-color: #030816;
+            --surface-color: rgba(10, 25, 50, 0.85);
             --surface-light: rgba(20, 40, 80, 0.9);
-            --primary-color: #00d2ff; /* Bleu néon / Cyan */
+            --primary-color: #00d2ff;
             --primary-hover: #009ecc;
             --danger-color: #ff4d4d;
             --warning-color: #ffb84d;
             --text-main: #ffffff;
-            --text-muted: #b0c4de; /* Bleu acier clair */
+            --text-muted: #b0c4de;
         }
 
         * {
@@ -30,7 +29,6 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            /* Arrière-plan avec un dégradé bleu nuit. Tu pourras remettre ton banner.gif si tu veux ! */
             background: linear-gradient(to bottom, rgba(3,8,22,0.8), rgba(3,8,22,1)), url('banner.gif') center/cover fixed no-repeat;
             color: var(--text-main);
             line-height: 1.6;
@@ -42,7 +40,6 @@
             text-transform: uppercase;
         }
 
-        /* --- NAVIGATION --- */
         header {
             position: fixed;
             top: 0;
@@ -67,7 +64,6 @@
             gap: 12px;
         }
 
-        /* Logo rond comme demandé précédemment */
         .logo img { 
             height: 45px; 
             width: 45px; 
@@ -82,11 +78,10 @@
         nav a { color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 13px; transition: 0.3s; }
         nav a:hover { color: var(--primary-color); }
 
-        /* --- SECTIONS --- */
         section { padding: 100px 20px 60px; max-width: 1200px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary-color); text-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+        .sub-section-title { color: var(--text-main); font-size: 1.5rem; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-color); }
 
-        /* --- HERO --- */
         #hero {
             height: 80vh;
             display: flex;
@@ -98,7 +93,6 @@
         #hero h1 { font-size: 4rem; margin-bottom: 15px; text-shadow: 0 0 20px rgba(0, 210, 255, 0.5); }
         #hero p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 35px; max-width: 700px; }
 
-        /* --- TABLES & GRILLES --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         
         .card {
@@ -119,20 +113,16 @@
         
         .cmd-tag { background: var(--surface-light); color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-family: monospace; font-weight: bold; margin-right: 5px; }
 
-        /* --- TABLEAU BARÈME --- */
-        .table-wrapper { overflow-x: auto; background: var(--surface-color); border-radius: 12px; border: 1px solid rgba(0, 210, 255, 0.2); backdrop-filter: blur(10px); }
+        .table-wrapper { overflow-x: auto; background: var(--surface-color); border-radius: 12px; border: 1px solid rgba(0, 210, 255, 0.2); backdrop-filter: blur(10px); margin-bottom: 40px; }
         table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background: var(--surface-light); color: var(--primary-color); padding: 15px 20px; font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
-        td { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
-        tr:last-child td { border-bottom: none; }
+        th { background: var(--surface-light); color: var(--primary-color); padding: 15px 20px; text-transform: uppercase; width: 60%; }
+        td { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.9rem; }
         tr:hover td { background: rgba(0, 210, 255, 0.05); color: #fff; }
         
-        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; display: inline-block; min-width: 85px; text-align: center; }
         .badge-warning { background: rgba(255, 184, 77, 0.2); color: var(--warning-color); border: 1px solid var(--warning-color); }
         .badge-danger { background: rgba(255, 77, 77, 0.2); color: var(--danger-color); border: 1px solid var(--danger-color); }
-        .badge-info { background: rgba(0, 210, 255, 0.2); color: var(--primary-color); border: 1px solid var(--primary-color); }
 
-        /* --- FOOTER --- */
         footer { text-align: center; padding: 40px; background: rgba(3,8,22,0.9); border-top: 1px solid rgba(0, 210, 255, 0.2); margin-top: 60px; }
     </style>
 </head>
@@ -145,62 +135,74 @@
         </a>
         <nav>
             <ul>
-                <li><a href="#bareme">Barème Joueurs</a></li>
+                <li><a href="#bareme">Barèmes</a></li>
                 <li><a href="#groupes">Sanctions Groupes</a></li>
                 <li><a href="#commandes">Commandes</a></li>
-                <li><a href="#taches">Tâches par Grade</a></li>
+                <li><a href="#taches">Tâches</a></li>
             </ul>
         </nav>
     </header>
-
+    <br> </br>
+    <br> </br>
     <section id="hero">
         <h1>Portail <span>Administration</span></h1>
-        <p>Espace réservé à l'équipe Staff de FlashLightRP. Référentiel des sanctions, commandes et attributions pour garantir une modération juste et impartiale.</p>
+        <p>Espace réservé à l'équipe Staff de FlashLightRP. Référentiel complet des sanctions, commandes et attributions.</p>
     </section>
-
+    <br> </br>
+    <br> </br>
     <section id="bareme">
-        <h2 class="section-title">Barème de Sanctions (Joueurs)</h2>
+        <h2 class="section-title">Barèmes de Sanctions</h2>
+
+        <h3 class="sub-section-title">Barème Global (Croissant)</h3>
         <div class="table-wrapper">
             <table>
-                <thead>
-                    <tr>
-                        <th>Infraction</th>
-                        <th>Description courte</th>
-                        <th>Sanction 1ère fois</th>
-                        <th>Récidive</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Infraction</th><th>Sanction</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td>HRP Vocal / Insultes OOC</td>
-                        <td>Parler hors-RP en jeu ou insulter un joueur personnellement.</td>
-                        <td><span class="badge badge-warning">Ban 24h</span></td>
-                        <td><span class="badge badge-danger">Ban 72h à Definitif</span></td>
-                    </tr>
-                    <tr>
-                        <td>MetaGaming (MG) / PowerGaming (PG)</td>
-                        <td>Utiliser des infos Discord IG ou forcer une scène irréaliste.</td>
-                        <td><span class="badge badge-info">Avertissement IG + Wipe inv.</span></td>
-                        <td><span class="badge badge-warning">Ban 48h</span></td>
-                    </tr>
-                    <tr>
-                        <td>Combat Logging</td>
-                        <td>Déconnexion volontaire pendant une scène (LSPD, braquage...).</td>
-                        <td><span class="badge badge-warning">Ban 48h</span></td>
-                        <td><span class="badge badge-danger">Ban 1 semaine</span></td>
-                    </tr>
-                    <tr>
-                        <td>Mass RP / No Fear LSPD</td>
-                        <td>Tirer au milieu du comico ou insulter la police sans raison.</td>
-                        <td><span class="badge badge-warning">Ban 24h</span></td>
-                        <td><span class="badge badge-danger">Ban 7 Jours</span></td>
-                    </tr>
-                    <tr>
-                        <td>FreeKill / MassDM</td>
-                        <td>Tuer un ou plusieurs joueurs sans aucune raison RP.</td>
-                        <td><span class="badge badge-danger">Ban Definitif</span></td>
-                        <td><span class="badge badge-danger">Ban Definitif</span></td>
-                    </tr>
+                    <tr><td>Spam Report / Non respect Report-Ticket / Straf vide</td><td><span class="badge badge-warning">Kick</span></td></tr>
+                    <tr><td>No Pain / WinRP / Double Vocal / Powergaming / Force RP</td><td><span class="badge badge-warning">1 Jour</span></td></tr>
+                    <tr><td>Vocal HRP / Insinuation / Metagaming / Parle Coma / Stream Hack</td><td><span class="badge badge-warning">1 Jour</span></td></tr>
+                    <tr><td>Free Taze - Punch / Trash au sol</td><td><span class="badge badge-warning">1 Jour</span></td></tr>
+                    <tr><td>Usebug</td><td><span class="badge badge-warning">2 Jours</span></td></tr>
+                    <tr><td>Zone Safe / CarKill / Mass RP / Refus de scène</td><td><span class="badge badge-warning">3 Jours</span></td></tr>
+                    <tr><td>Off Road / No Fear / Free Loot</td><td><span class="badge badge-warning">5 Jours</span></td></tr>
+                    <tr><td>ALT F4 en scène / Racisme / Trash Corp / V-Word / P-Word</td><td><span class="badge badge-danger">7 Jours</span></td></tr>
+                    <tr><td>Ripoux LSPD-LSSD ( + BL ) / Emote dégradante / Homophobie</td><td><span class="badge badge-danger">7 Jours</span></td></tr>
+                    <tr><td>Freeshot / Troll / Vol de voiture Service</td><td><span class="badge badge-danger">10 Jours</span></td></tr>
+                    <tr><td>Freekill</td><td><span class="badge badge-danger">14 Jours</span></td></tr>
+                    <tr><td>Trash Staff / Mensonge Staff / Trash Serveur</td><td><span class="badge badge-danger">15 Jours</span></td></tr>
+                    <tr><td>Transfert P1 - P2</td><td><span class="badge badge-danger">15 Jours + Wipe</span></td></tr>
+                    <tr><td>Leak d'info HRP</td><td><span class="badge badge-danger">30 Jours</span></td></tr>
+                    <tr><td>Mentalité Inadaptée / Comportement Inapproprié</td><td><span class="badge badge-danger">1 Mois / Perm</span></td></tr>
+                    <tr><td>Cheat / Harcèlement HRP / Menace Dox-DDOS / BE</td><td><span class="badge badge-danger">Définitif</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="sub-section-title">Barème Illégal (Croissant)</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead><tr><th>Infraction</th><th>Sanction</th></tr></thead>
+                <tbody>
+                    <tr><td>Pack non conforme</td><td><span class="badge badge-warning">Kick / Averto</span></td></tr>
+                    <tr><td>Camp QG / Perso non wipe</td><td><span class="badge badge-warning">1 Jour</span></td></tr>
+                    <tr><td>Pit Abusif / Trash Corps / Rekev / Arrangement HRP / No Pain</td><td><span class="badge badge-warning">2 Jours</span></td></tr>
+                    <tr><td>Leak Presence / Perso incohérent / Hauteur GDT / Pas de crew</td><td><span class="badge badge-warning">2 Jours</span></td></tr>
+                    <tr><td>Perso Incohérent / Ragdoll GF / Double Kev / Rekev / Vocal HRP</td><td><span class="badge badge-warning">3 Jours</span></td></tr>
+                    <tr><td>Pit (Pit K) / Trash corps-talk / TK / Double projet / Off Road / Bait</td><td><span class="badge badge-warning">4 Jours</span></td></tr>
+                    <tr><td>Double Projet / Bait / Face à face / Troll / No fear / Redrop</td><td><span class="badge badge-warning">5 Jours</span></td></tr>
+                    <tr><td>Alt F4 en GF / /AFK en GF</td><td><span class="badge badge-danger">7 Jours</span></td></tr>
+                    <tr><td>Push QG / Rush QG</td><td><span class="badge badge-danger">8 Jours</span></td></tr>
+                    <tr><td>Incrustation GF / Troll / Vol arme / Call Freekill (Variante)</td><td><span class="badge badge-danger">10 Jours</span></td></tr>
+                    <tr><td>Freekill / Heal en GF / Transfert / Tentative transfert</td><td><span class="badge badge-danger">14 Jours</span></td></tr>
+                    <tr><td>Mentalité inadaptée</td><td><span class="badge badge-danger">15 à 30 Jours</span></td></tr>
+                    <tr><td>Call Freekill</td><td><span class="badge badge-danger">20 Jours + Averto</span></td></tr>
+                    <tr><td>Duplication</td><td><span class="badge badge-danger">30 Jours</span></td></tr>
+                    <tr><td>Mods Abuse</td><td><span class="badge badge-danger">1 Mois</span></td></tr>
+                    <tr><td>BE Comp</td><td><span class="badge badge-danger">2 Mois</span></td></tr>
+                    <tr><td>Mods abuse (Variante)</td><td><span class="badge badge-danger">3 à 6 Mois</span></td></tr>
+                    <tr><td>Cheat Comp / Be Comp</td><td><span class="badge badge-danger">6 Mois</span></td></tr>
+                    <tr><td>Refus de verif / Cheat (Variante)</td><td><span class="badge badge-danger">1 An</span></td></tr>
+                    <tr><td>Cheat / Refus de Verif / Ban Evade</td><td><span class="badge badge-danger">Définitif</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -212,10 +214,9 @@
             <div class="card" style="border-top: 4px solid var(--primary-color);">
                 <i class="fas fa-exclamation-triangle" style="color: var(--primary-color);"></i>
                 <h3>L'Avertissement</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">Sanction donnée au Lead du groupe pour une faute mineure de ses membres (ex: tenue non conforme, léger manque de fair-play).</p>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">Sanction mineure donnée au Lead pour une faute de ses membres.</p>
                 <ul class="custom-list">
                     <li>Rappel à l'ordre officiel par le GGO.</li>
-                    <li>Aucun impact immédiat sur le business.</li>
                     <li>S'efface après 1 mois de bon comportement.</li>
                 </ul>
             </div>
@@ -223,61 +224,54 @@
             <div class="card" style="border-top: 4px solid var(--warning-color);">
                 <i class="fas fa-sword" style="color: var(--warning-color);"></i>
                 <h3 style="color: var(--warning-color);">L'Épée de Damoclès</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">Dernier avertissement avant le Wipe. Donné suite à l'accumulation d'avertissements ou une faute grave (ex: FreeKill de groupe, alliance illégale).</p>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">Dernier avertissement avant le Wipe. Surveillance stricte.</p>
                 <ul class="custom-list">
                     <li>Gel partiel des activités illégales.</li>
                     <li>Perte d'avantages ou d'armement possible.</li>
-                    <li>Le groupe est sous surveillance stricte.</li>
                 </ul>
             </div>
 
             <div class="card" style="border-top: 4px solid var(--danger-color);">
                 <i class="fas fa-skull-crossbones" style="color: var(--danger-color);"></i>
                 <h3 style="color: var(--danger-color);">Le Wipe de Groupe</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">La sanction ultime. Le projet est dissous par le Staff car il nuit au serveur ou n'a pas respecté le Damoclès.</p>
+                <p style="color: var(--text-muted); margin-bottom: 15px;">Dissolution totale du projet pour fautes graves répétées.</p>
                 <ul class="custom-list">
                     <li>Suppression totale du roster Discord.</li>
                     <li>Perte des laboratoires et territoires.</li>
-                    <li>Interdiction pour le Lead de reprendre un groupe pendant 2 mois.</li>
+                    <li>Interdiction de lead pendant 2 mois.</li>
                 </ul>
             </div>
         </div>
     </section>
 
     <section id="commandes">
-        <h2 class="section-title">Liste des Commandes par Grade</h2>
+        <h2 class="section-title">Commandes par Grade</h2>
         <div class="grid">
             <div class="card">
                 <h3><i class="fas fa-user-shield"></i> Helper / Modo</h3>
                 <ul class="custom-list">
-                    <li><span class="cmd-tag">/tpm</span> Se téléporter au marqueur</li>
+                    <li><span class="cmd-tag">/tpm</span> TP marqueur</li>
                     <li><span class="cmd-tag">/goto [ID]</span> Aller sur un joueur</li>
-                    <li><span class="cmd-tag">/bring [ID]</span> Amener un joueur à soi</li>
-                    <li><span class="cmd-tag">/noclip</span> Mode spectateur libre</li>
-                    <li><span class="cmd-tag">/spec [ID]</span> Spectate un joueur</li>
-                    <li><span class="cmd-tag">/freeze [ID]</span> Geler un joueur</li>
+                    <li><span class="cmd-tag">/bring [ID]</span> Amener un joueur</li>
+                    <li><span class="cmd-tag">/noclip</span> Mode spectateur</li>
                 </ul>
             </div>
             <div class="card">
                 <h3><i class="fas fa-hammer"></i> Administrateur</h3>
                 <ul class="custom-list">
-                    <li><span style="color: var(--text-muted); font-style: italic;">Toutes les commandes Modo +</span></li>
-                    <li><span class="cmd-tag">/ban [ID] [Temps]</span> Bannir un joueur</li>
-                    <li><span class="cmd-tag">/kick [ID]</span> Exclure un joueur</li>
-                    <li><span class="cmd-tag">/revive [ID]</span> Réanimer un joueur</li>
-                    <li><span class="cmd-tag">/heal [ID]</span> Soigner un joueur</li>
-                    <li><span class="cmd-tag">/setjob [ID] [Job]</span> Assigner un métier</li>
+                    <li><span class="cmd-tag">/ban [ID] [Temps]</span> Bannir</li>
+                    <li><span class="cmd-tag">/kick [ID]</span> Exclure</li>
+                    <li><span class="cmd-tag">/revive [ID]</span> Réanimer</li>
+                    <li><span class="cmd-tag">/setjob [ID]</span> Assigner métier</li>
                 </ul>
             </div>
             <div class="card">
                 <h3><i class="fas fa-crown"></i> Fondateur / Dev</h3>
                 <ul class="custom-list">
-                    <li><span style="color: var(--text-muted); font-style: italic;">Toutes les commandes Admin +</span></li>
-                    <li><span class="cmd-tag">/giveitem [ID]</span> Donner un objet</li>
-                    <li><span class="cmd-tag">/givemoney</span> Donner de l'argent</li>
-                    <li><span class="cmd-tag">/clearall</span> Nettoyer la zone (véhicules)</li>
-                    <li><span class="cmd-tag">/setgroup</span> Changer le grade d'un staff</li>
-                    <li><span class="cmd-tag">Accès Console</span> TxAdmin complet</li>
+                    <li><span class="cmd-tag">/giveitem [ID]</span> Donner objet</li>
+                    <li><span class="cmd-tag">/givemoney</span> Donner argent</li>
+                    <li><span class="cmd-tag">/setgroup</span> Changer grade staff</li>
+                    <li><span class="cmd-tag">Console</span> TxAdmin complet</li>
                 </ul>
             </div>
         </div>
@@ -288,32 +282,26 @@
         <div class="grid">
             <div class="card">
                 <h3>Helper / Modérateur</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">Première ligne de l'équipe Staff, ils s'assurent que le RP quotidien se passe bien.</p>
                 <ul class="custom-list">
-                    <li>Prendre les tickets "Besoin d'aide" IG et Discord.</li>
-                    <li>Régler les litiges mineurs (No fear, VDM).</li>
-                    <li>Spectate les zones sensibles (Drogues, Braquages) en invisible.</li>
-                    <li>Accueillir les nouveaux joueurs.</li>
+                    <li>Tickets IG et Discord.</li>
+                    <li>Régler litiges mineurs.</li>
+                    <li>Spectate zones sensibles.</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>Administrateur (GGO / GGL)</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">Ils gèrent l'économie, les factions et les problèmes de grande envergure.</p>
+                <h3>Administrateur</h3>
                 <ul class="custom-list">
-                    <li>Valider les dossiers d'entreprise ou de gang.</li>
-                    <li>Gérer les remboursements suite aux crashs serveurs.</li>
-                    <li>Appliquer les sanctions lourdes et les Wipes.</li>
-                    <li>Superviser les Helpeurs et Modérateurs.</li>
+                    <li>Valider dossiers Groupes/Entreprises.</li>
+                    <li>Gérer remboursements crashs.</li>
+                    <li>Appliquer sanctions lourdes.</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>Fondateur / Développeur</h3>
-                <p style="color: var(--text-muted); margin-bottom: 15px;">Ils gèrent la machine, la vision globale du serveur et l'ajout de contenu.</p>
+                <h3>Fondateur</h3>
                 <ul class="custom-list">
-                    <li>Développement des scripts et mappings.</li>
-                    <li>Gestion de la machine (VPS / SQL).</li>
-                    <li>Décisions finales sur l'orientation du serveur.</li>
-                    <li>Entretien de la boutique (Tebex).</li>
+                    <li>Développement scripts/mappings.</li>
+                    <li>Gestion machine VPS/SQL.</li>
+                    <li>Vision globale et boutique.</li>
                 </ul>
             </div>
         </div>
